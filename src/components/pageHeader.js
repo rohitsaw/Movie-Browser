@@ -7,11 +7,11 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getSearchMovies, redirectToHome } from "../redux/action.js";
 import { useRef } from "react";
+import _ from "lodash";
 
 export default () => {
   const ref = useRef();
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -45,7 +45,7 @@ export default () => {
         size="small"
         hiddenLabel
         placeholder="Search"
-        onChange={handleChange}
+        onChange={_.debounce(handleChange, 500)}
         InputProps={{
           disableUnderline: true,
           sx: { borderRadius: 2 },

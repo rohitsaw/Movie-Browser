@@ -4,7 +4,7 @@ import logger from "redux-logger";
 import { batchedSubscribe } from "redux-batched-subscribe";
 import _ from "lodash";
 
-const debounceNotify = _.debounce((notify) => notify());
+const debounceNotify = _.debounce((notify) => notify(), 100);
 
 const store = configureStore({
   reducer: rootReducer,
