@@ -7,16 +7,19 @@ const axios_instance = axios.create({
   headers: { Authorization: "Bearer " + access_token },
 });
 
-const discoverUpcomingMovies = async () => {
+const discoverUpcomingMovies = async (pageNumber) => {
   const date = new Date();
   date.setDate(date.getDate() + 1);
   const tomorrow = date.toISOString().split("T").at(0);
-  const url = `discover/movie?page=1`;
+  const url = `discover/movie`;
   return axios_instance.get(url, {
     params: {
+      page: pageNumber,
       sort_by: "primary_release_date.asc",
       "primary_release_date.gte": tomorrow,
       include_adult: false,
+      "with_runtime.gte": 61,
+      language: "en|hi",
     },
   });
 };
@@ -30,4 +33,15 @@ const getMovieById = async (movieId) => {
   });
 };
 
-export { discoverUpcomingMovies, getMovieById };
+const searchMovies = async (query, pageNumber) => {
+  const url = `search/movie`;
+  return axios_instance.get(url, {
+    params: {
+      page: pageNumber,
+      query: query,
+      include_adult: false,
+    },
+  });
+};
+
+export { discoverUpcomingMovies, getMovieById, searchMovies };

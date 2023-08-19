@@ -1,0 +1,79 @@
+.grid {
+  padding: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+img {
+  object-fit: contain;
+  aspect-ratio: 2/3;
+  max-width: 270px;
+}
+
+.textField {
+  width: 55%;
+}
+
+.card {
+  max-width: 270px;
+}
+
+.movie-container {
+  padding: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  padding-top: 20%;
+}
+
+.no-more-movie {
+  margin: auto;
+  padding-top: 20px;
+  width: 100%;
+  height: 30px;
+  text-align: center;
+}
+
+.movie-container img {
+  max-width: 250px;
+}
+
+.movie-detail-container {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.movie-detail-container div {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+@media screen and (max-width: 780px) {
+  .card {
+    max-width: 230px;
+  }
+
+  img {
+    aspect-ratio: 2/3;
+    max-width: 230px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .textField {
+    width: 80%;
+  }
+  .movie-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
