@@ -25,7 +25,6 @@ export default (state = initialState, action) => {
       };
     }
     case "MORE_UPCOMING_MOVIE_LOADED": {
-      console.log("upcoming movies loaded");
       return {
         ...state,
         ...action.payload,
@@ -42,7 +41,6 @@ export default (state = initialState, action) => {
       };
     }
     case "SEARCH_MOVIE_LOADED": {
-      console.log("search movies loaded");
       return {
         ...state,
         ...action.payload,
