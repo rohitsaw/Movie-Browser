@@ -11,7 +11,10 @@ export default function MovieListPage() {
           ? state.searchMoviesList
           : state.upcomingMoviesList,
       isLoading: state.isLoading,
-      error: state.error,
+      error:
+        state.searchQuery.length > 0
+          ? state.searchMovieError
+          : state.upcomingMovieError,
     };
   });
 

@@ -22,7 +22,7 @@ export default () => {
     return {
       movie: state.selectedMovie,
       isLoading: state.isLoading,
-      error: state.error,
+      error: state.selectedMovieError,
     };
   });
 

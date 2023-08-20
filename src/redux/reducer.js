@@ -2,17 +2,18 @@ const initialState = {
   upcomingMoviesList: [],
   upcomingMoviesPageNumber: 1,
   upcomingMoviesTotalPage: 1,
+  upcomingMovieError: "",
 
   searchQuery: "",
   searchMoviesList: [],
   searchMoviesPageNumber: 1,
   searchMoviesTotalPage: 1,
+  searchMovieError: "",
 
   selectedMovie: null,
+  selectedMovieError: "",
 
   isLoading: true,
-
-  error: "",
 };
 
 export default (state = initialState, action) => {
@@ -21,7 +22,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
-        error: "",
+        upcomingMovieError: "",
       };
     }
     case "MORE_UPCOMING_MOVIE_LOADED": {
@@ -37,7 +38,7 @@ export default (state = initialState, action) => {
         ...state,
         ...action.payload,
         isLoading: true,
-        error: "",
+        searchMovieError: "",
       };
     }
     case "SEARCH_MOVIE_LOADED": {
@@ -51,7 +52,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
-        error: "",
+        selectedMovieError: "",
       };
     }
     case "SINGLE_MOVIE_LOADED": {
@@ -75,7 +76,8 @@ export default (state = initialState, action) => {
         ...state,
         ...action.payload,
         isLoading: false,
-        error: "",
+        selectedMovieError: "",
+        searchMovieError: "",
       };
     }
 

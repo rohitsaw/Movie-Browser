@@ -32,7 +32,7 @@ const getMoreMovie = () => async (dispatch, getState) => {
       dispatch({
         type: "ERROR",
         payload: {
-          error:
+          searchMovieError:
             state.searchMoviesList.length > 0
               ? "No More Movies To List."
               : "No Movie Found! Try to Search Something else.",
@@ -62,7 +62,7 @@ const getMoreMovie = () => async (dispatch, getState) => {
       dispatch({
         type: "ERROR",
         payload: {
-          error: "No More Movies To List.",
+          upcomingMovieError: "No More Movies To List.",
         },
       });
     }
@@ -85,7 +85,7 @@ const getSearchMovies = (queryString) => async (dispatch) => {
     dispatch({
       type: "ERROR",
       payload: {
-        error: "No Movie Found! Try to Search Something else.",
+        searchMovieError: "No Movie Found! Try to Search Something else.",
       },
     });
   } else {
@@ -115,7 +115,7 @@ const getSingleMovieDetails = (movieId) => async (dispatch) => {
     dispatch({
       type: "ERROR",
       payload: {
-        error: "No Movie Found! Try to Search Something else.",
+        selectedMovieError: "No Movie Found! Try to Search Something else.",
       },
     });
   }
