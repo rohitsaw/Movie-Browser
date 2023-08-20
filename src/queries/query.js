@@ -18,9 +18,8 @@ const discoverUpcomingMovies = async (pageNumber) => {
       page: pageNumber,
       sort_by: "primary_release_date.asc",
       "primary_release_date.gte": tomorrow,
-      include_adult: false,
-      "with_runtime.gte": 61,
       language: "en|hi",
+      region: "IN",
     },
   });
 };
