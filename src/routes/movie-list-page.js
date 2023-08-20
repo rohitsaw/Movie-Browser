@@ -20,7 +20,7 @@ export default function MovieListPage() {
 
   return (
     <>
-      <div class="grid">
+      <div className="grid">
         {movies.map((movie) => (
           <Link key={movie.id} to={`movies/${movie.id}`}>
             <MovieCard movie={movie} />

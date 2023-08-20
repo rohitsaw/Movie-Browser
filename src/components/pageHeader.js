@@ -1,4 +1,6 @@
 import { Box, TextField } from "@mui/material";
+import { memo } from "react";
+
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -6,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 
 import _ from "lodash";
 
-export default ({ inputRef, handleChange, handleHomeRedirect }) => {
+export default memo(({ inputRef, handleChange, handleHomeRedirect }) => {
   return (
     <Box
       data-testid="header"
@@ -44,4 +46,4 @@ export default ({ inputRef, handleChange, handleHomeRedirect }) => {
       </IconButton>
     </Box>
   );
-};
+});
