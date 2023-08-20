@@ -1,10 +1,11 @@
 import axios from "axios";
 
-
 const axios_instance = axios.create({
   baseURL: "https://api.themoviedb.org/3/",
   timeout: 1000,
-  headers: { Authorization: "Bearer " + access_token },
+  headers: {
+    Authorization: "Bearer " + process.env.REACT_APP_ACCESS_TOKEN,
+  },
 });
 
 const discoverUpcomingMovies = async (pageNumber) => {

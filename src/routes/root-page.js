@@ -3,6 +3,7 @@ import Header from "../components/pageHeader.js";
 import { useDispatch, useSelector } from "react-redux";
 import { getMoreMovie } from "../redux/action.js";
 import { useEffect, useRef } from "react";
+import _ from "lodash";
 
 import "./root-page.css";
 
@@ -13,6 +14,10 @@ export default () => {
     dispatch(getMoreMovie());
   }, []);
 
+  const handleMovieLoad = () => {
+    dispatch(getMoreMovie());
+  };
+
   const observerTarget = useRef(null);
 
   const { error } = useSelector((state) => state.error);
@@ -21,7 +26,7 @@ export default () => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          dispatch(getMoreMovie());
+          _.debounce(handleMovieLoad, 200)();
         }
       },
       { threshold: 1 }
