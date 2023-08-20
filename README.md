@@ -43,6 +43,11 @@ You may also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+- To check the test coverage. run  **npm test -- --coverage**
+
+<img width="593" alt="Screenshot 2023-08-20 at 3 40 09 PM" src="https://github.com/rohitsaw/GSIV23_ROHIT_SAW/assets/37767343/2d48a783-d67b-4ba6-a166-95673c4593dc">
+
+
 
 ## Status: 
 ### _Although This project is complete, the following thing may be considered for future works._
