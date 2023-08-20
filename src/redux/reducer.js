@@ -1,3 +1,5 @@
+import { ACTIONS } from "./constant";
+
 const initialState = {
   upcomingMoviesList: [],
   upcomingMoviesPageNumber: 1,
@@ -18,14 +20,14 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "LOADING_MORE_UPCOMING_MOVIE": {
+    case ACTIONS.LOADING_MORE_UPCOMING_MOVIE: {
       return {
         ...state,
         isLoading: true,
         upcomingMovieError: "",
       };
     }
-    case "MORE_UPCOMING_MOVIE_LOADED": {
+    case ACTIONS.MORE_UPCOMING_MOVIE_LOADED: {
       return {
         ...state,
         ...action.payload,
@@ -33,7 +35,7 @@ export default (state = initialState, action) => {
       };
     }
 
-    case "LOADING_SEARCH_MOVIE": {
+    case ACTIONS.LOADING_SEARCH_MOVIE: {
       return {
         ...state,
         ...action.payload,
@@ -41,21 +43,21 @@ export default (state = initialState, action) => {
         searchMovieError: "",
       };
     }
-    case "SEARCH_MOVIE_LOADED": {
+    case ACTIONS.SEARCH_MOVIE_LOADED: {
       return {
         ...state,
         ...action.payload,
         isLoading: false,
       };
     }
-    case "LOADING_SINGLE_MOVIE": {
+    case ACTIONS.LOADING_SINGLE_MOVIE: {
       return {
         ...state,
         isLoading: true,
         selectedMovieError: "",
       };
     }
-    case "SINGLE_MOVIE_LOADED": {
+    case ACTIONS.SINGLE_MOVIE_LOADED: {
       return {
         ...state,
         ...action.payload,
@@ -63,7 +65,7 @@ export default (state = initialState, action) => {
       };
     }
 
-    case "ERROR": {
+    case ACTIONS.ERROR: {
       return {
         ...state,
         ...action.payload,
@@ -71,7 +73,7 @@ export default (state = initialState, action) => {
       };
     }
 
-    case "REDIRECT_TO_HOME": {
+    case ACTIONS.REDIRECT_TO_HOME: {
       return {
         ...state,
         ...action.payload,

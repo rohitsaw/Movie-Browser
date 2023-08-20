@@ -4,11 +4,13 @@ import {
   searchMovies,
 } from "../queries/query.js";
 
+import { ACTIONS } from "./constant.js";
+
 const getMoreMovie = () => async (dispatch, getState) => {
   const state = getState();
   if (state.searchQuery.length > 0) {
     dispatch({
-      type: "LOADING_SEARCH_MOVIE",
+      type: ACTIONS.LOADING_SEARCH_MOVIE,
     });
 
     const res = await searchMovies(
@@ -21,7 +23,7 @@ const getMoreMovie = () => async (dispatch, getState) => {
       res.data.results.length > 0
     ) {
       dispatch({
-        type: "SEARCH_MOVIE_LOADED",
+        type: ACTIONS.SEARCH_MOVIE_LOADED,
         payload: {
           searchMoviesList: [...state.searchMoviesList, ...res.data.results],
           searchMoviesPageNumber: state.searchMoviesPageNumber + 1,
@@ -30,7 +32,7 @@ const getMoreMovie = () => async (dispatch, getState) => {
       });
     } else {
       dispatch({
-        type: "ERROR",
+        type: ACTIONS.ERROR,
         payload: {
           searchMovieError:
             state.searchMoviesList.length > 0
@@ -40,7 +42,7 @@ const getMoreMovie = () => async (dispatch, getState) => {
       });
     }
   } else {
-    dispatch({ type: "LOADING_MORE_UPCOMING_MOVIE" });
+    dispatch({ type: ACTIONS.LOADING_MORE_UPCOMING_MOVIE });
 
     const state = getState();
 
@@ -48,7 +50,7 @@ const getMoreMovie = () => async (dispatch, getState) => {
 
     if (state.upcomingMoviesPageNumber <= state.upcomingMoviesTotalPage) {
       dispatch({
-        type: "MORE_UPCOMING_MOVIE_LOADED",
+        type: ACTIONS.MORE_UPCOMING_MOVIE_LOADED,
         payload: {
           upcomingMoviesList: [
             ...state.upcomingMoviesList,
@@ -60,7 +62,7 @@ const getMoreMovie = () => async (dispatch, getState) => {
       });
     } else {
       dispatch({
-        type: "ERROR",
+        type: ACTIONS.ERROR,
         payload: {
           upcomingMovieError: "No More Movies To List.",
         },
@@ -71,7 +73,7 @@ const getMoreMovie = () => async (dispatch, getState) => {
 
 const getSearchMovies = (queryString) => async (dispatch) => {
   dispatch({
-    type: "LOADING_SEARCH_MOVIE",
+    type: ACTIONS.LOADING_SEARCH_MOVIE,
     payload: {
       searchQuery: queryString,
       searchMoviesList: [],
@@ -83,14 +85,14 @@ const getSearchMovies = (queryString) => async (dispatch) => {
 
   if (res.data.results.length === 0) {
     dispatch({
-      type: "ERROR",
+      type: ACTIONS.ERROR,
       payload: {
         searchMovieError: "No Movie Found! Try to Search Something else.",
       },
     });
   } else {
     dispatch({
-      type: "SEARCH_MOVIE_LOADED",
+      type: ACTIONS.SEARCH_MOVIE_LOADED,
       payload: {
         searchMoviesList: res.data.results,
         searchMoviesPageNumber: 2,
@@ -102,18 +104,18 @@ const getSearchMovies = (queryString) => async (dispatch) => {
 
 const getSingleMovieDetails = (movieId) => async (dispatch) => {
   try {
-    dispatch({ type: "LOADING_SINGLE_MOVIE" });
+    dispatch({ type: ACTIONS.LOADING_SINGLE_MOVIE });
     const res = await getMovieById(movieId);
 
     dispatch({
-      type: "SINGLE_MOVIE_LOADED",
+      type: ACTIONS.SINGLE_MOVIE_LOADED,
       payload: {
         selectedMovie: res.data,
       },
     });
   } catch (error) {
     dispatch({
-      type: "ERROR",
+      type: ACTIONS.ERROR,
       payload: {
         selectedMovieError: "No Movie Found! Try to Search Something else.",
       },
@@ -123,7 +125,7 @@ const getSingleMovieDetails = (movieId) => async (dispatch) => {
 
 const redirectToHome = () => async (dispatch) => {
   dispatch({
-    type: "REDIRECT_TO_HOME",
+    type: ACTIONS.REDIRECT_TO_HOME,
     payload: {
       searchQuery: "",
       searchMoviesList: [],
