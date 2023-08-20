@@ -17,6 +17,7 @@ const ProgressiveImg = ({
 
   return (
     <img
+      data-testid="image"
       {...{ src: imgSrc, ...props }}
       alt={props.alt || ""}
       onError={(e) => {

@@ -3,30 +3,13 @@ import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { getSearchMovies, redirectToHome } from "../redux/action.js";
-import { useRef } from "react";
+
 import _ from "lodash";
 
-export default () => {
-  const ref = useRef();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    navigate("/");
-    dispatch(getSearchMovies(e.target.value));
-  };
-
-  const handleHomeRedirect = () => {
-    dispatch(redirectToHome());
-    navigate("/");
-    ref.current.value = "";
-  };
-
+export default ({ inputRef, handleChange, handleHomeRedirect }) => {
   return (
     <Box
+      data-testid="header"
       sx={{
         height: 48,
         py: "10px",
@@ -37,9 +20,9 @@ export default () => {
       }}
     >
       <TextField
-        inputRef={ref}
+        data-testid="textfield"
+        inputRef={inputRef}
         className="textField"
-        // style={{ width: "55%" }}
         id="filled-basic"
         variant="filled"
         size="small"

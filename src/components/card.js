@@ -8,7 +8,11 @@ import ProgressiveImg from "./progressiveImg";
 
 export default function MovieCard({ movie }) {
   return (
-    <Card className="card" sx={{ borderRadius: 4, boxShadow: 3 }}>
+    <Card
+      data-testid="card"
+      className="card"
+      sx={{ borderRadius: 4, boxShadow: 3 }}
+    >
       <CardMedia>
         <ProgressiveImg
           src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
