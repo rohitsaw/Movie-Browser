@@ -1,4 +1,4 @@
-## Getting Started with Movie-Browser
+## Movie-Browser
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -13,6 +13,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - There is a search bar, where users can search for any movie and find movie details.
 - Search results also support infinite scrolling.
 - Click on the movie card will redirect to the movie details page.
+- Movie URL can be shared directly to others (eg - [https://movie-browser-ig5z.onrender.com/movies/135718](https://movie-browser-ig5z.onrender.com/movies/135718) )
 
 ## Screenshots:
 
