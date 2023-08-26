@@ -14,19 +14,22 @@ const discoverUpcomingMovies = async (pageNumber, options) => {
   const tomorrow = date.toISOString().split("T").at(0);
   const url = `discover/movie`;
 
-  const languages = options?.languages
-    ?.map((each) => each.split("-").at(-1).trim())
-    .join("|");
+  const modified_options = {
+    language:
+      options?.languages
+        ?.map((each) => each.split("-").at(-1).trim())
+        .join("|") || undefined,
+    region:
+      options?.countries
+        ?.map((each) => each.split("-").at(-1).trim())
+        .join("|") || undefined,
+  };
 
-  const countries = options?.countries
-    ?.map((each) => each.split("-").at(-1).trim())
-    .join("|");
   return axios_instance.get(url, {
     params: {
       page: pageNumber,
       "primary_release_date.gte": tomorrow,
-      language: languages,
-      region: countries,
+      ...modified_options,
     },
   });
 };
