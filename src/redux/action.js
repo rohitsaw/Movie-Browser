@@ -2,6 +2,8 @@ import {
   discoverUpcomingMovies,
   getMovieById,
   searchMovies,
+  getAllAvailableLanguages,
+  getAllAvailableCountries,
 } from "../queries/query.js";
 
 import { ACTIONS } from "./constant.js";
@@ -46,7 +48,10 @@ const getMoreMovie = () => async (dispatch, getState) => {
 
     const state = getState();
 
-    const res = await discoverUpcomingMovies(state.upcomingMoviesPageNumber);
+    const res = await discoverUpcomingMovies(state.upcomingMoviesPageNumber, {
+      countries: state.savedCountries,
+      languages: state.savedLanguages,
+    });
 
     if (state.upcomingMoviesPageNumber <= state.upcomingMoviesTotalPage) {
       dispatch({
@@ -126,12 +131,49 @@ const getSingleMovieDetails = (movieId) => async (dispatch) => {
 const redirectToHome = () => async (dispatch) => {
   dispatch({
     type: ACTIONS.REDIRECT_TO_HOME,
+  });
+};
+
+const loadFilters = () => async (dispatch) => {
+  const languages = await getAllAvailableLanguages();
+  const countries = await getAllAvailableCountries();
+  dispatch({
+    type: ACTIONS.LOAD_FILTERS,
     payload: {
-      searchQuery: "",
-      searchMoviesList: [],
-      searchMoviesPageNumber: 1,
+      languages: languages.data,
+      countries: countries.data,
     },
   });
 };
 
-export { getMoreMovie, getSingleMovieDetails, getSearchMovies, redirectToHome };
+const applyFilters = (countries, languages) => async (dispatch, getState) => {
+  dispatch({
+    type: ACTIONS.APPLY_FILTERS,
+    payload: {
+      countries: countries,
+      languages: languages,
+    },
+  });
+
+  dispatch({ type: ACTIONS.LOADING_MORE_UPCOMING_MOVIE });
+
+  const res = await discoverUpcomingMovies(1, { languages, countries });
+
+  dispatch({
+    type: ACTIONS.MORE_UPCOMING_MOVIE_LOADED,
+    payload: {
+      upcomingMoviesList: [...res.data.results],
+      upcomingMoviesPageNumber: 2,
+      upcomingMoviesTotalPage: res.data.total_pages,
+    },
+  });
+};
+
+export {
+  getMoreMovie,
+  getSingleMovieDetails,
+  getSearchMovies,
+  redirectToHome,
+  loadFilters,
+  applyFilters,
+};

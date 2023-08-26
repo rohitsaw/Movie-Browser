@@ -15,6 +15,12 @@ const initialState = {
   selectedMovie: null,
   selectedMovieError: "",
 
+  allCountries: [],
+  allLanguages: [],
+
+  savedCountries: [],
+  savedLanguages: [],
+
   isLoading: true,
 };
 
@@ -30,7 +36,9 @@ export default (state = initialState, action) => {
     case ACTIONS.MORE_UPCOMING_MOVIE_LOADED: {
       return {
         ...state,
-        ...action.payload,
+        upcomingMoviesList: action.payload.upcomingMoviesList,
+        upcomingMoviesPageNumber: action.payload.upcomingMoviesPageNumber,
+        upcomingMoviesTotalPage: action.payload.upcomingMoviesTotalPage,
         isLoading: false,
       };
     }
@@ -38,7 +46,12 @@ export default (state = initialState, action) => {
     case ACTIONS.LOADING_SEARCH_MOVIE: {
       return {
         ...state,
-        ...action.payload,
+        searchQuery: action?.payload?.searchQuery ?? state.searchQuery,
+        searchMoviesList:
+          action?.payload?.searchMoviesList ?? state.searchMoviesList,
+        searchMoviesPageNumber:
+          action?.payload?.searchMoviesPageNumber ??
+          state.searchMoviesPageNumber,
         isLoading: true,
         searchMovieError: "",
       };
@@ -46,7 +59,9 @@ export default (state = initialState, action) => {
     case ACTIONS.SEARCH_MOVIE_LOADED: {
       return {
         ...state,
-        ...action.payload,
+        searchMoviesList: action.payload.searchMoviesList,
+        searchMoviesPageNumber: action.payload.searchMoviesPageNumber,
+        searchMoviesTotalPage: action.payload.searchMoviesTotalPage,
         isLoading: false,
       };
     }
@@ -60,7 +75,7 @@ export default (state = initialState, action) => {
     case ACTIONS.SINGLE_MOVIE_LOADED: {
       return {
         ...state,
-        ...action.payload,
+        selectedMovie: action.payload.selectedMovie,
         isLoading: false,
       };
     }
@@ -76,10 +91,29 @@ export default (state = initialState, action) => {
     case ACTIONS.REDIRECT_TO_HOME: {
       return {
         ...state,
-        ...action.payload,
+        searchQuery: "",
+        searchMoviesList: [],
+        searchMoviesPageNumber: 1,
+
         isLoading: false,
         selectedMovieError: "",
         searchMovieError: "",
+      };
+    }
+
+    case ACTIONS.LOAD_FILTERS: {
+      return {
+        ...state,
+        allCountries: action.payload.countries,
+        allLanguages: action.payload.languages,
+      };
+    }
+
+    case ACTIONS.APPLY_FILTERS: {
+      return {
+        ...state,
+        savedCountries: action.payload.countries,
+        savedLanguages: action.payload.languages,
       };
     }
 

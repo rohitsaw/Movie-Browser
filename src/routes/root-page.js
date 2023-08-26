@@ -2,16 +2,19 @@ import { Outlet } from "react-router-dom";
 import Header from "../components/pageHeader.js";
 import { useDispatch, useSelector } from "react-redux";
 import { getMoreMovie } from "../redux/action.js";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
-import { getSearchMovies, redirectToHome } from "../redux/action.js";
-
+import {
+  getSearchMovies,
+  redirectToHome,
+  loadFilters,
+} from "../redux/action.js";
+import PersistentDrawerLeft from "../components/sidebar.js";
 import "./root-page.css";
 
 export default () => {
   const dispatch = useDispatch();
-  const inputRef = useRef();
   const observerTarget = useRef(null);
   const navigate = useNavigate();
 
@@ -19,8 +22,19 @@ export default () => {
     erro: state.searchMovieError || state.upcomingMovieError,
   }));
 
+  const [open, setOpen] = useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     dispatch(getMoreMovie());
+    dispatch(loadFilters());
   }, []);
 
   useEffect(() => {
@@ -44,29 +58,33 @@ export default () => {
     };
   }, [observerTarget]);
 
-  const handleChange = useCallback((e) => {
-    navigate("/");
+  const handleChange = (e) => {
     dispatch(getSearchMovies(e.target.value));
-  }, []);
+  };
 
-  const handleHomeRedirect = useCallback(() => {
+  const handleHomeRedirect = () => {
     dispatch(redirectToHome());
     navigate("/");
-    inputRef.current.value = "";
-  }, [inputRef]);
+  };
 
-  const handleMovieLoad = useCallback(() => {
+  const handleMovieLoad = () => {
     dispatch(getMoreMovie());
-  }, []);
+  };
 
   return (
     <>
-      <Header
-        inputRef={inputRef}
-        handleChange={handleChange}
-        handleHomeRedirect={handleHomeRedirect}
-      />
-      <Outlet />
+      <PersistentDrawerLeft
+        handleDrawerClose={handleDrawerClose}
+        isDrawerOpen={open}
+      >
+        <Header
+          handleDrawerOpen={handleDrawerOpen}
+          isDrawerOpen={open}
+          handleChange={handleChange}
+          handleHomeRedirect={handleHomeRedirect}
+        />
+        <Outlet />
+      </PersistentDrawerLeft>
       {!error && <div ref={observerTarget}></div>}
     </>
   );
