@@ -51,7 +51,7 @@ export default () => {
         <div className="movie-detail-container">
           <div>
             <Typography variant="h5">{title}</Typography>
-            <Rating name="read-only" value={Number(rating) / 2} readOnly />
+            <Rating name="read-only" value={rating} readOnly />
           </div>
           <Typography variant="subtitle1">
             {year} | {length} | {director} |

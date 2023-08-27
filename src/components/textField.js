@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 export default ({ placeholder, width, optionsFor, onChange }) => {
   const { options } = useSelector((state) => ({
     options:
-      optionsFor === "country"
+      optionsFor === "region"
         ? state.allCountries.map(
             (each) => each.english_name + " - " + each.iso_3166_1
           )
@@ -17,7 +17,7 @@ export default ({ placeholder, width, optionsFor, onChange }) => {
 
   return (
     <>
-      <Box sx={{ width: width }}>
+      <Box sx={{ width: width, pt: "10px" }}>
         <Autocomplete
           clearIcon={false}
           options={[...options]}

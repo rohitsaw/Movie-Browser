@@ -23,12 +23,14 @@ const discoverUpcomingMovies = async (pageNumber, options) => {
       options?.countries
         ?.map((each) => each.split("-").at(-1).trim())
         .join("|") || undefined,
+
+    sort_by: options?.sortBy || undefined,
   };
 
   return axios_instance.get(url, {
     params: {
       page: pageNumber,
-      "primary_release_date.gte": tomorrow,
+      "release_date.gte": tomorrow,
       ...modified_options,
     },
   });
@@ -59,7 +61,7 @@ const getAllAvailableLanguages = async () => {
 };
 
 const getAllAvailableCountries = async () => {
-  const url = "configuration/countries";
+  const url = "watch/providers/regions";
   return axios_instance.get(url);
 };
 

@@ -20,6 +20,7 @@ const initialState = {
 
   savedCountries: [],
   savedLanguages: [],
+  sortBy: "popularity.desc",
 
   isLoading: true,
 };
@@ -114,6 +115,7 @@ export default (state = initialState, action) => {
         ...state,
         savedCountries: action.payload.countries,
         savedLanguages: action.payload.languages,
+        sortBy: action.payload.sortBy,
       };
     }
 

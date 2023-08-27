@@ -16,6 +16,12 @@ import MailIcon from "@mui/icons-material/Mail";
 import TextFieldWithChips from "./textField";
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+
 import { applyFilters as applyFiltersFn } from "../redux/action";
 
 import { useDispatch } from "react-redux";
@@ -59,9 +65,10 @@ export default function PersistentDrawerLeft({
 
   const [countries, setCountries] = useState([]);
   const [languages, setLanguages] = useState([]);
+  const [sortByValue, handleSortByChange] = useState("popularity.desc");
 
   const applyFilters = () => {
-    dispatch(applyFiltersFn(countries, languages));
+    dispatch(applyFiltersFn(countries, languages, sortByValue));
   };
 
   return (
@@ -111,11 +118,39 @@ export default function PersistentDrawerLeft({
         />
 
         <TextFieldWithChips
-          placeholder="Countries"
+          placeholder="Region"
           width={260}
-          optionsFor="country"
+          optionsFor="region"
           onChange={setCountries}
         />
+
+        <FormControl sx={{ width: 260, px: "20px", pt: "20px", pb: "10px" }}>
+          <FormLabel id="demo-row-radio-buttons-group-label">Sort By</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="demo-row-radio-buttons-group-label"
+            name="row-radio-buttons-group"
+            defaultValue="popularity"
+            value={sortByValue}
+            onChange={(e) => handleSortByChange(e.target.value)}
+          >
+            <FormControlLabel
+              value="popularity.desc"
+              control={<Radio />}
+              label="Popularity"
+            />
+            <FormControlLabel
+              value="vote_average.desc"
+              control={<Radio />}
+              label="Rating"
+            />
+            <FormControlLabel
+              value="primary_release_date.asc"
+              control={<Radio />}
+              label="Primary Release Date"
+            />
+          </RadioGroup>
+        </FormControl>
 
         <Divider sx={{ boxShadow: 3 }} />
 

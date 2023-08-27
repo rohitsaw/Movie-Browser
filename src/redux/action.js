@@ -51,6 +51,7 @@ const getMoreMovie = () => async (dispatch, getState) => {
     const res = await discoverUpcomingMovies(state.upcomingMoviesPageNumber, {
       countries: state.savedCountries,
       languages: state.savedLanguages,
+      sortBy: state.sortBy,
     });
 
     if (state.upcomingMoviesPageNumber <= state.upcomingMoviesTotalPage) {
@@ -141,33 +142,39 @@ const loadFilters = () => async (dispatch) => {
     type: ACTIONS.LOAD_FILTERS,
     payload: {
       languages: languages.data,
-      countries: countries.data,
+      countries: countries.data.results,
     },
   });
 };
 
-const applyFilters = (countries, languages) => async (dispatch, getState) => {
-  dispatch({
-    type: ACTIONS.APPLY_FILTERS,
-    payload: {
-      countries: countries,
-      languages: languages,
-    },
-  });
+const applyFilters =
+  (countries, languages, sortBy) => async (dispatch, getState) => {
+    dispatch({
+      type: ACTIONS.APPLY_FILTERS,
+      payload: {
+        countries: countries,
+        languages: languages,
+        sortBy: sortBy,
+      },
+    });
 
-  dispatch({ type: ACTIONS.LOADING_MORE_UPCOMING_MOVIE });
+    dispatch({ type: ACTIONS.LOADING_MORE_UPCOMING_MOVIE });
 
-  const res = await discoverUpcomingMovies(1, { languages, countries });
+    const res = await discoverUpcomingMovies(1, {
+      languages,
+      countries,
+      sortBy,
+    });
 
-  dispatch({
-    type: ACTIONS.MORE_UPCOMING_MOVIE_LOADED,
-    payload: {
-      upcomingMoviesList: [...res.data.results],
-      upcomingMoviesPageNumber: 2,
-      upcomingMoviesTotalPage: res.data.total_pages,
-    },
-  });
-};
+    dispatch({
+      type: ACTIONS.MORE_UPCOMING_MOVIE_LOADED,
+      payload: {
+        upcomingMoviesList: [...res.data.results],
+        upcomingMoviesPageNumber: 2,
+        upcomingMoviesTotalPage: res.data.total_pages,
+      },
+    });
+  };
 
 export {
   getMoreMovie,
